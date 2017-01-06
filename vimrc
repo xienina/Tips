@@ -1,0 +1,92 @@
+"""""""""""""""""""""""""""""""""""""""" vi:set ts=8 sw=4 et ft=vim: "
+" File: $HOME/.vimrc
+" I copied Clark Wang's settings, used for my solaris os.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if v:version < 600
+    finish
+endif
+
+" Use Vim settings, rather than Vi settings (much better!).
+" This must be first, because it changes other options as a side effect.
+ set nocompatible
+
+if has("autocmd")
+    " Enable file type detection.
+    filetype plugin indent on
+
+    " When editing a file, always jump to the last known cursor position.
+    autocmd BufReadPost *
+                \ if line("'\"") > 1 && line("'\"") <= line("$") |
+                \ exe "normal! g`\"" |
+                \ endif
+endif
+
+if has("syntax")
+    syntax on
+endif
+
+"" settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+ set autoindent
+ set backspace=indent,eol,start
+ set nobackup
+"set expandtab
+" enable this if you edit multiple files
+ set hidden
+ set hlsearch
+ set incsearch
+ set listchars=precedes:<,extends:>,tab:>-,trail:.
+ set report=0
+ set ruler
+ set shiftwidth=4
+ set showcmd
+ set showmatch
+ set tabstop=8
+ set undolevels=1000
+ set nowrap
+ set nowrapscan
+
+" status line
+ set laststatus=2
+ set statusline=\ %3l'%L,%-5(%c%V%)\ %<%F%h%m%r
+
+if v:version >= 700
+    set completeopt=menu
+endif
+
+"" functions """""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+function SwitchTabStop()
+    if &tabstop == 8
+        setl tabstop=4
+        setl shiftwidth=4
+    elseif &tabstop == 4
+        setl tabstop=2
+        setl shiftwidth=2
+    elseif &tabstop == 2
+        setl tabstop=8
+        setl shiftwidth=4
+    endif
+    echo "ts=" . &tabstop . " sw=" . &shiftwidth
+endfunction
+
+"" mappings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+"inoremap jj <ESC>
+
+ nnoremap _ <C-W>s
+ nnoremap \| <C-W>v
+
+ nnoremap zh <C-W>h
+ nnoremap zj <C-W>j
+ nnoremap zk <C-W>k
+ nnoremap zl <C-W>l
+
+ nnoremap - 2<C-W>-
+ nnoremap + 2<C-W>+
+ nnoremap < 2<C-W><
+ nnoremap > 2<C-W>>
+
+ nnoremap # :call SwitchTabStop()<CR>
+ nnoremap F8 :setl list!<CR>
+ nnoremap F9 :setl number!<CR>
