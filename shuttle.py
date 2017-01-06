@@ -3,6 +3,14 @@
 import sys
 import os
 import time
+import ntplib 
+
+c = ntplib.NTPClient() 
+response = c.request('pool.ntp.org') 
+ts = response.tx_time 
+_date = time.strftime('%Y-%m-%d',time.localtime(ts)) 
+_time = time.strftime('%X',time.localtime(ts)) 
+this_time = os.system('date {} && time {}'.format(_date,_time))
 
 TIMEFMT = "%Y-%m-%d %H:%M:%S"
 #
@@ -106,7 +114,6 @@ def getseconds(dayfrom, dayto):
         return (nsecs)
 
 def get_minsecs(l):
-        this_time = time.strftime(TIMEFMT, time.localtime())
         prefix = this_time.split(' ')[0]
 
         that_time = ""
